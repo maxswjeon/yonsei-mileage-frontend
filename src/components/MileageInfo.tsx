@@ -1,4 +1,4 @@
-import { Box, Checkbox, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
@@ -62,19 +62,13 @@ const MileageInfo: React.FC<MileageInfoProps> = (props) => {
         내 정보
       </Heading>
 
-      <Flex justifyContent="space-between" mt="3">
+      <Box mt="3">
         <Text>총 이수학점 비율: {(store.a1 / store.a2).toFixed(4)}</Text>
         <Text>
           직전학기 이수학점 비율:{" "}
           {(store.b1 / store.b2 > 1 ? 1 : store.b1 / store.b2).toFixed(4)}
         </Text>
-        <Checkbox
-          checked={isSecond}
-          onChange={(e) => setIsSecond(e.currentTarget.checked)}
-        >
-          재수강
-        </Checkbox>
-      </Flex>
+      </Box>
 
       {isLoading && (
         <Heading as="h2" size="xl" textAlign="center" mt="5">
