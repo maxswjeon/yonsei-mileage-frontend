@@ -30,7 +30,7 @@ const MileageInfo: React.FC<MileageInfoProps> = (props) => {
   };
 
   const { data, isLoading } = useQuery<InfoResult>(
-    ["info", course._id, studentInfo],
+    ["info", course._id, studentInfo, !isSecond],
     async () => {
       const { data } = await axios.post<InfoResult>(
         `${process.env.NEXT_PUBLIC_API_URL}/info`,
