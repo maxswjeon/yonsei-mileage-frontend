@@ -27,7 +27,6 @@ const MileageInfo: React.FC<MileageInfoProps> = (props) => {
     subjects: store.subjects,
     grade: store.grade,
     graduate: store.graduate,
-    isFirst: !isSecond,
   };
 
   const { data, isLoading } = useQuery<InfoResult>(
@@ -38,6 +37,7 @@ const MileageInfo: React.FC<MileageInfoProps> = (props) => {
         {
           id: course._id,
           studentInfo,
+          isFirst: !isSecond,
         }
       );
 
