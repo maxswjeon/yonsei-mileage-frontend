@@ -63,10 +63,10 @@ const MileageInfo: React.FC<MileageInfoProps> = (props) => {
       </Heading>
 
       <Flex justifyContent="space-between" mt="3">
-        <Text>총 이수학점 비율: {store.a1 / store.a2}</Text>
+        <Text>총 이수학점 비율: {(store.a1 / store.a2).toFixed(4)}</Text>
         <Text>
           직전학기 이수학점 비율:{" "}
-          {store.b1 / store.b2 > 1 ? 1 : store.b1 / store.b2}
+          {(store.b1 / store.b2 > 1 ? 1 : store.b1 / store.b2).toFixed(4)}
         </Text>
         <Checkbox
           checked={isSecond}
