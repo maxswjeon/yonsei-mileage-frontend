@@ -48,11 +48,13 @@ const MileageData: React.FC<MileageDataProps> = (props) => {
                     <Th textAlign="center">총 이수학점 비율</Th>
                     <Th textAlign="center">직전학기 이수학점 비율</Th>
                     <Th textAlign="center">학년</Th>
-                    <Th textAlign="center">수강여부</Th>
                   </Thead>
                   <Tbody>
                     {d.data.map((d2) => (
-                      <Tr key={d2.join(",")}>
+                      <Tr
+                        key={d2.join(",")}
+                        color={d2[9] === "O" ? "green.600" : "red.700"}
+                      >
                         <Td textAlign="center">{d2[0]}</Td>
                         <Td textAlign="center">{d2[1]}</Td>
                         <Td textAlign="center">{d2[2]}</Td>
@@ -62,7 +64,6 @@ const MileageData: React.FC<MileageDataProps> = (props) => {
                         <Td textAlign="center">{d2[6]}</Td>
                         <Td textAlign="center">{d2[7]}</Td>
                         <Td textAlign="center">{d2[8]}</Td>
-                        <Td textAlign="center">{d2[9]}</Td>
                       </Tr>
                     ))}
                   </Tbody>
