@@ -1,16 +1,22 @@
 import { Flex, Heading, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { Course } from "../models/course";
 
 interface SearchItemProps {
   course: Course;
-  onClick: () => void;
 }
 
 const SearchItem: React.FC<SearchItemProps> = (props) => {
-  const { course, onClick } = props;
+  const router = useRouter();
+  const { course } = props;
 
   return (
-    <Flex justifyContent="space-between" py="2" onClick={onClick}>
+    <Flex
+      justifyContent="space-between"
+      py="2"
+      onClick={() => router.push(`/course/${course._id}`)}
+      cursor="pointer"
+    >
       <div>
         <Heading size="md">{course.KNA}</Heading>
         <Text>{course.EKNA}</Text>

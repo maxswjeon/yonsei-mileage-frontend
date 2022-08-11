@@ -1,111 +1,75 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  Flex,
-  FormControl,
-  FormLabel,
-  Heading,
-  Input,
-} from "@chakra-ui/react";
-import type { NextPage } from "next";
+import { Box, Button, Flex, Heading, Input } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useState } from "react";
+import SearchItem from "../components/SearchItem";
+import { Course } from "../models/course";
 import { useStore } from "../store";
 
-type FormValues = {
-  a1: number;
-  a2: number;
-  subjects: number;
-  b1: number;
-  b2: number;
-  grade: number;
-  graduate: boolean;
-};
-
-const Home: NextPage = () => {
-  const store = useStore();
-
-  const {
-    handleSubmit,
-    register,
-    formState: { errors, isSubmitting },
-  } = useForm<FormValues>({
-    defaultValues: {
-      a1: store.a1 == -1 ? undefined : store.a1,
-      a2: store.a2 == -1 ? undefined : store.a2,
-      subjects: store.subjects == -1 ? undefined : store.subjects,
-      b1: store.b1 == -1 ? undefined : store.b1,
-      b2: store.b2 == -1 ? undefined : store.b2,
-      grade: store.grade == -1 ? undefined : store.grade,
-      graduate: store.graduate,
-    },
-  });
-
+const MainPage: NextPage = () => {
   const router = useRouter();
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    store.setData(data);
-    router.push("/list");
-  };
+  const store = useStore();
+
+  const disabled =
+    store.a1 == -1 ||
+    store.a2 == -1 ||
+    store.b1 == -1 ||
+    store.b2 == -1 ||
+    store.grade == -1 ||
+    store.subjects == -1;
+
+  const [query, setQuery] = useState<string>("");
+  const { data } = useQuery<Course[]>(
+    ["search", query],
+    async () => {
+      const { data } = await axios.get<Course[]>(
+        `${process.env.NEXT_PUBLIC_API_URL}/search?query=${query}`
+      );
+      return data;
+    },
+    {
+      enabled: Boolean(query),
+    }
+  );
 
   return (
-    <Flex justifyContent="center" alignItems="center" height="100%">
-      <Box
-        maxWidth="500px"
-        width="100%"
-        p="5"
-        boxShadow="2xl"
-        rounded="lg"
-        mt={["0", "20"]}
-      >
-        <Heading as="h1" size="lg" pb="3" textAlign="center">
-          연세대학교 마일리지 검색
+    <Box
+      width="100%"
+      maxWidth="840px"
+      m="auto"
+      mt="10"
+      p="5"
+      shadow="xl"
+      rounded="xl"
+    >
+      <Flex justifyContent="space-between">
+        <Heading as="h1" size="lg">
+          강의 검색
         </Heading>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <FormControl mt="3">
-            <FormLabel>총 이수 학점</FormLabel>
-            <Input type="number" {...register("a1", { required: true })} />
-          </FormControl>
-          <FormControl mt="3">
-            <FormLabel>졸업 이수 학점</FormLabel>
-            <Input type="number" {...register("a2", { required: true })} />
-          </FormControl>
-          <FormControl mt="3">
-            <FormLabel>신청 과목 수</FormLabel>
-            <Input
-              type="number"
-              {...register("subjects", { required: true })}
-            />
-          </FormControl>
-          <FormControl mt="3">
-            <FormLabel>직전학기 이수학점</FormLabel>
-            <Input type="number" {...register("b1", { required: true })} />
-          </FormControl>
-          <FormControl mt="3">
-            <FormLabel>학기당 수강 학점</FormLabel>
-            <Input type="number" {...register("b2", { required: true })} />
-          </FormControl>
-          <FormControl mt="3">
-            <FormLabel>학년</FormLabel>
-            <Input type="number" {...register("grade", { required: true })} />
-          </FormControl>
-          <FormControl mt="3">
-            <Checkbox {...register("graduate")}>졸업 신청</Checkbox>
-          </FormControl>
-          <Button
-            mt={4}
-            w="100%"
-            colorScheme="teal"
-            isLoading={isSubmitting}
-            type="submit"
-          >
-            시작
-          </Button>
-        </form>
-      </Box>
-    </Flex>
+        <Button
+          size="sm"
+          onClick={() => router.push("/info")}
+          colorScheme={disabled ? "teal" : undefined}
+        >
+          학생 정보 설정
+        </Button>
+      </Flex>
+      <Input
+        mt="3"
+        placeholder="과목명, 교수명 또는 학정번호로 검색하세요"
+        value={query}
+        disabled={disabled}
+        onChange={(e) => setQuery(e.currentTarget.value)}
+      />
+      {data &&
+        data.slice(0, 10).map((item) => {
+          return <SearchItem key={item._id} course={item} />;
+        })}
+    </Box>
   );
 };
 
-export default Home;
+export default MainPage;

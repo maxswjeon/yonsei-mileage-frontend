@@ -1,4 +1,4 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import {
   Hydrate,
   QueryClient,
@@ -32,7 +32,16 @@ function App({ Component, pageProps }: AppProps) {
       </Head>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <ChakraProvider>
+          <ChakraProvider
+            theme={extendTheme({
+              fonts: {
+                heading: `Pretendard, sans-serif`,
+                body: `Pretendard, sans-serif`,
+                th: `Pretendard, sans-serif`,
+                td: `Pretendard, sans-serif`,
+              },
+            })}
+          >
             <Component {...pageProps} />
           </ChakraProvider>
         </Hydrate>
