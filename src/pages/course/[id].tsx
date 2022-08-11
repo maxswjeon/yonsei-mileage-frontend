@@ -19,7 +19,6 @@ import CourseInfoSection from "../../sections/CourseInfoSection";
 import GradeMinMileageSection from "../../sections/GradeMinMileageSection";
 import MileageTabsSection from "../../sections/MileageTabsSection";
 import MinMileageSection from "../../sections/MinMileageSection";
-import { useStore } from "../../store";
 
 type InfoResult = {
   result: boolean;
@@ -30,8 +29,6 @@ type InfoResult = {
 const CoursePage: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
-
-  const store = useStore();
 
   const { data: data_raw, isLoading } = useQuery<InfoResult>(
     // TODO: Add dependency here
@@ -55,7 +52,7 @@ const CoursePage: NextPage = () => {
         width="100%"
         maxWidth="840px"
         m="auto"
-        mt="10"
+        my="10"
         p="5"
         shadow="xl"
         rounded="xl"
