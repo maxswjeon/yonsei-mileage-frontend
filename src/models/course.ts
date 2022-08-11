@@ -9,4 +9,17 @@ export type Course = {
   PROF: string;
   FILE: string;
   HYHG: string;
+  POINT: string;
+  CUT1: string;
+  CUT2: string;
+  CUT3: string;
+  CUT4: string;
+  MAX: string;
+  MAXM: string;
+  MINM: string;
+  AVGM: string;
+  CNT: string;
+  PART: string;
+  TIME: string;
+  CLSR: string;
 };
