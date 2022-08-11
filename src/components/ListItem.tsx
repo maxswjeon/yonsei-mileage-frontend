@@ -20,7 +20,9 @@ const ListItem: React.FC<SearchItemProps> = (props) => {
       <Flex justifyContent="space-between" py="2">
         <div>
           <Heading size="md">{course.KNA}</Heading>
-          <Text>{course.EKNA}</Text>
+          <Text color="gray.400" fontSize="xs">
+            {course.EKNA}
+          </Text>
         </div>
         <div>
           <Text textAlign="right">
