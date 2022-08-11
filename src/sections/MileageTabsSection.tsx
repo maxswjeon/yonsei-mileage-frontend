@@ -28,13 +28,50 @@ interface MileageTabProps {
 
 const MilageTab: React.FC<MileageTabProps> = (props) => {
   const {
-    data: { data: history, min_by_grade },
+    data: { data: history, min, min_by_grade, course },
   } = props;
 
   const { grade } = useStore();
 
+  const isGradeFiltered =
+    course.CUT1 !== "0" ||
+    course.CUT2 !== "0" ||
+    course.CUT3 !== "0" ||
+    course.CUT4 !== "0";
+
+  const GradeFilter = isGradeFiltered ? (
+    <>
+      <TableContainer>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th textAlign="center">1학년</Th>
+              <Th textAlign="center">2학년</Th>
+              <Th textAlign="center">3학년</Th>
+              <Th textAlign="center">4학년</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            <Tr>
+              <Td textAlign="center">{course.CUT1}</Td>
+              <Td textAlign="center">{course.CUT2}</Td>
+              <Td textAlign="center">{course.CUT3}</Td>
+              <Td textAlign="center">{course.CUT4}</Td>
+            </Tr>
+          </Tbody>
+        </Table>
+      </TableContainer>
+    </>
+  ) : null;
+
   return (
     <>
+      <Text fontSize="xs" color="gray.500">
+        {isGradeFiltered
+          ? "해당 과목은 학년별 정원이 있는 과목으로, 학기별 최저 마일리지 정보는 학생과 동일한 학년의 정보만 표시합니다"
+          : "해당 과목은 학년별 정원이 없는 과목으로, 학기별 최저 마일리지 정보는 모든 학년의 정보를 표시합니다"}
+      </Text>
+      {GradeFilter}
       <TableContainer>
         <Table>
           <Thead>
@@ -53,8 +90,10 @@ const MilageTab: React.FC<MileageTabProps> = (props) => {
           </Thead>
           <Tbody>
             {history
-              .filter(
-                (h) => h.grade == grade && h.mileage == min_by_grade[grade - 1]
+              .filter((h) =>
+                isGradeFiltered
+                  ? h.grade == grade && h.mileage == min_by_grade[grade - 1]
+                  : h.mileage == min
               )
               .map((h, i) => (
                 <Tr key={i} color={h.isEnrolled ? "green.600" : "red.600"}>
@@ -84,9 +123,6 @@ const MileageTabsSection: React.FC<MileageTabsSectionProps> = (props) => {
       <Heading as="h2" size="md">
         학기별 최저 마일리지 정보
       </Heading>
-      <Text fontSize="xs" color="gray.500">
-        학기별 최저 마일리지 정보는 학생과 동일한 학년의 정보만 표시합니다
-      </Text>
       <Tabs>
         <TabList>
           {data.map((d) => (
