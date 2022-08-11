@@ -177,7 +177,9 @@ const InfoPage: NextPage = () => {
       </Flex>
       <Flex mt="1" justifyContent="space-between" gap="3">
         <FormControl>
-          <FormLabel color="red.600">학기당 수강 학점 (직접입력)</FormLabel>
+          <FormLabel color="red.600">
+            이번 학기 수강 예정 학점 (직접입력)
+          </FormLabel>
           <Input
             type="number"
             value={store.b2 != -1 ? store.b2 : undefined}

@@ -9,6 +9,7 @@ import {
   Tabs,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
   Tr,
@@ -83,6 +84,9 @@ const MileageTabsSection: React.FC<MileageTabsSectionProps> = (props) => {
       <Heading as="h2" size="md">
         학기별 최저 마일리지 정보
       </Heading>
+      <Text fontSize="xs" color="gray.500">
+        학기별 최저 마일리지 정보는 학생과 동일한 학년의 정보만 표시합니다
+      </Text>
       <Tabs>
         <TabList>
           {data.map((d) => (
