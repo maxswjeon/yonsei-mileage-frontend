@@ -1,0 +1,21 @@
+export type Everytime = {
+  _id: string;
+  id: string;
+  code: string;
+  name: string;
+  professor: string;
+  type: string;
+  grade: string;
+  time: string;
+  place: string;
+  credit: string;
+  popular: string;
+  target: string;
+  notice: string;
+  lectureId: string;
+  lectureRate: string;
+  misc1: string;
+  misc2: string;
+  misc3: string;
+  misc4: string;
+};

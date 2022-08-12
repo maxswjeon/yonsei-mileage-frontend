@@ -15,6 +15,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { Course } from "../../models/course";
 import { CourseData } from "../../models/CourseData";
+import { Everytime } from "../../models/everytime";
 import CourseInfoSection from "../../sections/CourseInfoSection";
 import GradeMinMileageSection from "../../sections/GradeMinMileageSection";
 import MileageTabsSection from "../../sections/MileageTabsSection";
@@ -24,6 +25,7 @@ import MyInfoSection from "../../sections/MyInfoSection";
 type InfoResult = {
   result: boolean;
   course: Course;
+  everytime: Everytime | null;
   data: CourseData[];
 };
 
@@ -114,7 +116,7 @@ const CoursePage: NextPage = () => {
     );
   }
 
-  const { course, data } = data_raw;
+  const { course, data, everytime } = data_raw;
 
   if (data.length === 0) {
     return (
@@ -145,7 +147,7 @@ const CoursePage: NextPage = () => {
           </Flex>
         </Flex>
 
-        <CourseInfoSection course={course} />
+        <CourseInfoSection course={course} everytime={everytime} />
 
         <Heading as="h1" size="xl" textAlign="center">
           이전 학기 마일리지 정보가 없습니다
@@ -185,7 +187,7 @@ const CoursePage: NextPage = () => {
         </Flex>
       </Flex>
 
-      <CourseInfoSection course={course} />
+      <CourseInfoSection course={course} everytime={everytime} />
       <MinMileageSection data={data} />
       <GradeMinMileageSection data={data} />
       <MyInfoSection />
