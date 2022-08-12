@@ -19,6 +19,7 @@ import CourseInfoSection from "../../sections/CourseInfoSection";
 import GradeMinMileageSection from "../../sections/GradeMinMileageSection";
 import MileageTabsSection from "../../sections/MileageTabsSection";
 import MinMileageSection from "../../sections/MinMileageSection";
+import MyInfoSection from "../../sections/MyInfoSection";
 
 type InfoResult = {
   result: boolean;
@@ -187,6 +188,7 @@ const CoursePage: NextPage = () => {
       <CourseInfoSection course={course} />
       <MinMileageSection data={data} />
       <GradeMinMileageSection data={data} />
+      <MyInfoSection />
       <MileageTabsSection data={data} />
     </Box>
   );
